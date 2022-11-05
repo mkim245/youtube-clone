@@ -1,6 +1,6 @@
-const axios = require("axios");
+import axios from 'axios';
 // modified after coping the following from https://rapidapi.com/ytdlfree/api/youtube-v31 
-const BASE_URL = 'https://youtube-v31.p.rapidapi.com';
+export const BASE_URL = 'https://youtube-v31.p.rapidapi.com';
 
 const options = {
   params: {
