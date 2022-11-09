@@ -5,17 +5,20 @@ import ReactPlayer from 'react-player';
 import { Typography, Box, Stack } from '@mui/material';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-import { Video } from './';
+import { Videos } from './';
 import { fetchFromAPI } from '../utils/fetchFromAPI';
-import { ViewColumnTwoTone } from '@mui/icons-material';
 
 const VideoDetail = () => {
   const [videoDetail, setVideoDetail] = useState(null);
+  const [videos, setVideos] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     fetchFromAPI(`videos?part=snippet, statistics&id=${id}`)
       .then((data) => setVideoDetail(data.items[0]));
+
+    fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`)
+      .then((data) => setVideos(data.items))
   }, [id]);
 
   if (!videoDetail?.snippet) return 'Loading...';
@@ -49,6 +52,9 @@ const VideoDetail = () => {
               </Stack>
             </Stack>
           </Box>
+        </Box>
+        <Box px={2} py={{ md: 1, xs: 5 }} justifyContent="center" alignItems="center" >
+          <Videos videos={videos} direction="column" />
         </Box>
       </Stack>
     </Box>
